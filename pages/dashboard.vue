@@ -157,6 +157,41 @@ const distance = computed(() => {
     },
   })
 })
+
+// 获取本地存储的webhook地址
+const webhookUrl = ref(localStorage.getItem('webhook_url') || '')
+
+// 检查是否需要发送webhook通知
+async function checkExpireAndNotify() {
+  const expireDate = new Date(expire)
+  const oneDayBefore = new Date(expireDate.getTime() - 24 * 60 * 60 * 1000)
+  
+  if (now.value >= oneDayBefore && now.value < expireDate) {
+    // 生成新的二维码链接
+    const qrcodeUrl = window.location.origin + '/login'
+    
+    // 发送webhook通知
+    if (webhookUrl.value) {
+      try {
+        await fetch(webhookUrl.value, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: '您的微信登录token将在24小时内过期，请及时重新登录',
+            qrcodeUrl: qrcodeUrl,
+            expireTime: expireDate.toLocaleString()
+          })
+        })
+        console.log('已发送token过期提醒')
+      } catch (error) {
+        console.error('发送webhook通知失败:', error)
+      }
+    }
+  }
+}
+
 const warning = computed(() => {
   const value = distance.value
   return value === '已过期' || value.includes('分钟') || value.includes('秒')

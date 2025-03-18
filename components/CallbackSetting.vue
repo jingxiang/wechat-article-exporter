@@ -12,15 +12,23 @@
               class="w-full px-3 py-2 rounded border border-slate-6 bg-slate-2 text-slate-12 placeholder:text-slate-8"
             />
             <p class="mt-2 text-sm text-slate-11">
-              设置接收登录token的目标地址
+              设置接收登录token的目标地址，同时也用于接收token过期提醒
             </p>
           </div>
-          <button
-            class="px-4 py-2 rounded bg-slate-3 hover:bg-slate-4 text-slate-12"
-            @click="sendToken"
-          >
-            发送Token
-          </button>
+          <div class="flex gap-2">
+            <button
+              class="px-4 py-2 rounded bg-slate-3 hover:bg-slate-4 text-slate-12"
+              @click="saveWebhook"
+            >
+              保存
+            </button>
+            <button
+              class="px-4 py-2 rounded bg-slate-3 hover:bg-slate-4 text-slate-12"
+              @click="sendToken"
+            >
+              发送Token
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -30,8 +38,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const targetUrl = ref('')
+const targetUrl = ref(localStorage.getItem('webhook_url') || '')
 const loginAccount = useLoginAccount()
+
+const saveWebhook = () => {
+  if (!targetUrl.value) {
+    alert('请输入目标地址')
+    return
+  }
+
+  localStorage.setItem('webhook_url', targetUrl.value)
+  alert('保存成功')
+}
 
 const sendToken = async () => {
   if (!targetUrl.value) {
