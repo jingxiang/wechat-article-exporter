@@ -3,6 +3,7 @@
  */
 
 import {proxyMpRequest} from "~/server/utils";
+import { clearLoginState } from "~/server/utils/login-state";
 
 interface LogoutQuery {
     token: string
@@ -21,6 +22,10 @@ export default defineEventHandler(async (event) => {
             lang: 'zh_CN',
         },
     })
+
+    // 清除登录状态
+    clearLoginState()
+
     return {
         statusCode: response.status,
         statusText: response.statusText,

@@ -1,6 +1,6 @@
 import {proxyMpRequest} from "~/server/utils";
 import {createUser, getUser, type UserEntry} from "~/server/kv/user";
-
+import { saveLoginState } from "~/server/utils/login-state";
 
 export default defineEventHandler(async (event) => {
     const body: Record<string, string | number> = {
@@ -26,12 +26,16 @@ export default defineEventHandler(async (event) => {
         body: body,
     })
 
-
     const cookies = response.headers.getSetCookie()
     const parsedCookies = parseCookies(cookies)
 
     const _body = await response.json()
     const _token = new URL(`http://localhost${_body.redirect_url}`).searchParams.get('token')
+    if (!_token) {
+        return {
+            err: '登录失败，未获取到token'
+        }
+    }
     const _cookie: string[] = []
     Object.keys(parsedCookies).forEach(key => {
         _cookie.push(key + '=' + parsedCookies[key].value)
@@ -88,15 +92,19 @@ export default defineEventHandler(async (event) => {
         }
     }
 
-    const newBody = JSON.stringify({
+    const loginAccount = {
         uuid: user.uuid,
         nickname: user.nickname,
         avatar: user.avatar,
         fakeid: user.fakeid,
         token: _token,
         expires: slave_user_cookie.expires,
-    })
+    }
 
+    // 保存登录状态到文件
+    saveLoginState(loginAccount)
+
+    const newBody = JSON.stringify(loginAccount)
     const headers = new Headers(response.headers)
     headers.set('Content-Length', new TextEncoder().encode(newBody).length.toString())
     return new Response(newBody, {headers: headers})
