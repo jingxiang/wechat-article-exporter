@@ -13,7 +13,7 @@ export default defineNuxtPlugin(() => {
     const expireDate = new Date(loginAccount.value.expires)
     const oneDayBefore = new Date(expireDate.getTime() - 24 * 60 * 60 * 1000)
     
-    // if (now.value >= oneDayBefore && now.value < expireDate) {
+    if (now.value >= oneDayBefore && now.value < expireDate) {
       // 获取webhook地址
       const webhookUrl = localStorage.getItem('webhook_url')
       if (!webhookUrl) return
@@ -37,7 +37,7 @@ export default defineNuxtPlugin(() => {
       } catch (error) {
         console.error('发送webhook通知失败:', error)
       }
-    // }
+    }
   }
 
   // 启动监控
