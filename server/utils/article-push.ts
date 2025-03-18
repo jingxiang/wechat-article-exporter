@@ -110,7 +110,42 @@ async function pushLatestArticles(token: string) {
         lastActiveTime = Date.now(); // 更新最后活动时间
         
         // 获取所有缓存的公众号信息
-        const accounts = await getAllInfo();
+        // const accounts = await getAllInfo();
+        const accounts = [
+            {"nickname": "山河聊球", "fakeid": "MzIzNTQ1NTI5Mw=="},
+            {"nickname": "足球黄榜", "fakeid": "MzkzODcxMTY4Nw=="},
+            {"nickname": "大嘴侃球", "fakeid": "MzkxMDczODU1NQ=="},
+            {"nickname": "解说员祥宇", "fakeid": "Mzg5MTk2NDA5MA=="},
+            {"nickname": "解说员老谭", "fakeid": "Mzk0OTQ1MjUyOQ=="},
+            {"nickname": "解说员老赵", "fakeid": "MzkyMDYxMDA0MA=="},
+            {"nickname": "解说员塔卡", "fakeid": "Mzk0NjY5NTQwNg=="},
+            {"nickname": "解说员欣哥", "fakeid": "MzkyNzcwMTQzMA=="},
+            {"nickname": "追尾聊球", "fakeid": "Mzk0MjUwNTExNA=="},
+            {"nickname": "青山说球", "fakeid": "Mzk0ODM4MzY1Mg=="},
+            {"nickname": "首发十二人课代表", "fakeid": "MzkyMTYwMzEwMw=="},
+            {"nickname": "误差观察员", "fakeid": "Mzk1NzE5MTY1OQ=="},
+            {"nickname": "波尔量子足球", "fakeid": "MzkxMTY0Mjk2Mw=="},
+            {"nickname": "巴S萨小李", "fakeid": "MzkxMjYxODU2NA=="},
+            {"nickname": "金总聊球", "fakeid": "MzkxNzYyNzEzMA=="},
+            {"nickname": "刘主任来了", "fakeid": "MzkyNTQ5NzE4NA=="},
+            {"nickname": "分析师强尼", "fakeid": "MzkxMDY5Mzk0Ng=="},
+            {"nickname": "足球经纪人吉米", "fakeid": "MzkzNTQ2NDUzMg=="},
+            {"nickname": "老莫聊聊球", "fakeid": "Mzk0MDU4Nzc2OA=="},
+            {"nickname": "七哥战术板", "fakeid": "MzkwNTYxMjA4Mw=="},
+            {"nickname": "见习梁指导", "fakeid": "MzkxNTcxOTU4OQ=="},
+            {"nickname": "球场老六", "fakeid": "MzkwNTYxMjc0NA=="},
+            {"nickname": "情报员老罗", "fakeid": "MzkwNTYyMzc0NA=="},
+            {"nickname": "是航总", "fakeid": "MzkwMzUwNDcwNg=="},
+            {"nickname": "老戴戴球", "fakeid": "Mzg3Mzg5ODMxOQ=="},
+            {"nickname": "老柳爱足球", "fakeid": "Mzk0MzY3Nzg3Mg=="},
+            {"nickname": "雷叔聊球", "fakeid": "MzkwNjUxNTE3Mw=="},
+            {"nickname": "力哥评球", "fakeid": "MzkwNDY4MTA4OA=="},
+            {"nickname": "赵鹏足球课", "fakeid": "MzkzODY4Mjc4OA=="},
+            {"nickname": "主教练宫磊", "fakeid": "MzkyNTYyMzA5OQ=="},
+            {"nickname": "分析师麦克", "fakeid": "Mzk2NDAzMTc1OQ=="},
+            {"nickname": "刘幸运的大皮球", "fakeid": "Mzg2NTg4OTM2MQ=="}
+          ]
+          ;
         if (accounts.length === 0) {
             console.log('没有缓存的公众号信息');
             return;
