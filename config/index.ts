@@ -47,3 +47,15 @@ const SCAN_LOGIN_TYPE = {
     6: '二维码加载失败',
     7: 'qq号需要绑定邮箱',
 }
+
+/**
+ * 文章推送配置
+ */
+export const ARTICLE_PUSH_CONFIG = {
+    // 推送间隔（分钟）
+    INTERVAL: 10,
+    // 每次获取的文章数量
+    LIMIT: 5,
+    // 推送地址
+    PUSH_URL: process.env.ARTICLE_PUSH_URL || 'http://localhost:3000/api/articles/push'
+};

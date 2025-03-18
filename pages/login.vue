@@ -110,12 +110,11 @@
 
 <script setup lang="ts">
 import type {LoginAccount, ScanLoginResult, StartLoginResult} from "~/types/types";
-
+import { startPushMonitor } from '~/server/utils/article-push';
 
 const qrcodeSrc = ref('')
 const scanLoginType = ref(0)
 const qqBindMailUrl = ref('')
-
 
 const isStopQrcodeTimer = ref(false)
 const qrcodeRefreshTimes = ref(0)
@@ -125,7 +124,6 @@ const hasStartLogin = ref(false)
 
 const loginAccount = useLoginAccount()
 const activeAccount = useActiveAccount()
-
 
 useHead({
   title: '登录 | 微信公众号文章导出'
