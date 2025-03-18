@@ -7,6 +7,7 @@
       <CredentialSetting />
       <ProxySetting />
       <DownloadSetting />
+      <CallbackSetting />
       <div class="h-[30vh]"></div>
     </div>
   </div>
